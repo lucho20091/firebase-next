@@ -11,11 +11,15 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Hello World</h1>
       {isAuthenticated ? (
-        <div>
-          <p>Welcome, {user.email}!</p>
-          <p>User ID: {user.uid}</p>
+        <div className="flex flex-col items-center justify-center h-screen">
+          <p>Welcome, {user.displayName || user.email}!</p>
+          <img
+            src={user.photoURL || "./avatar.jpg"}
+            alt="user"
+            className="w-10 h-10 rounded-full"
+          />
+          <p>This is your Todo List</p>
         </div>
       ) : (
         <p>No user signed in</p>
