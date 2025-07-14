@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,7 +17,20 @@ const firebaseConfig = {
   appId: "1:927616063757:web:d4dc5ceb96671be500b844",
 };
 
+const firebaseConfig2 = {
+  apiKey: "AIzaSyBCnqrnvnJLaKu-5OLII4sXRgxaVbpWmuc",
+  authDomain: "oldgram-dd94a.firebaseapp.com",
+  databaseURL: "https://oldgram-dd94a-default-rtdb.firebaseio.com",
+  projectId: "oldgram-dd94a",
+  storageBucket: "oldgram-dd94a.appspot.com",
+  messagingSenderId: "388076421720",
+  appId: "1:388076421720:web:e535cb0192adbc55c9c02d",
+};
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+// app 2 oldgram storage
+export const app2 = initializeApp(firebaseConfig2);
+export const storage = getStorage(app2);
