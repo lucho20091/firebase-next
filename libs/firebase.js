@@ -28,9 +28,10 @@ const firebaseConfig2 = {
 };
 
 // Initialize Firebase
+// Default app its todo app
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
-// app 2 oldgram storage
-export const app2 = initializeApp(firebaseConfig2);
+// app 2 oldgram storage later for storage for images upload
+export const app2 = initializeApp(firebaseConfig2, "oldgram-app");
 export const storage = getStorage(app2);
