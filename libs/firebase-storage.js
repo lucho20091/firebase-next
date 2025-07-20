@@ -52,6 +52,57 @@ export function uploadMedia(file) {
   return uploadTask;
 }
 
+// Upload profile picture
+export function uploadProfilePicture(file) {
+  // Validate file type - only images allowed for profile pictures
+  const imageTypes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+  ];
+
+  if (!imageTypes.includes(file.type)) {
+    throw new Error(
+      "Please upload an image file (JPEG, PNG, GIF, WebP) for your profile picture."
+    );
+  }
+
+  // Create unique filename with timestamp to avoid conflicts
+  const timestamp = Date.now();
+  const fileExtension = file.name.split(".").pop();
+  const fileName = `profile_${timestamp}.${fileExtension}`;
+
+  const storageRef = ref(storage, `profile-pictures/${fileName}`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log("Profile picture upload is " + progress + "% done");
+    },
+    (error) => {
+      console.error("Error uploading profile picture: ", error);
+    }
+  );
+
+  return uploadTask;
+}
+
+// Get profile picture URL
+export async function getProfilePictureURL(fileName) {
+  try {
+    const profilePicRef = ref(storage, `profile-pictures/${fileName}`);
+    const url = await getDownloadURL(profilePicRef);
+    return url;
+  } catch (error) {
+    console.error("Error getting profile picture URL:", error);
+    return null;
+  }
+}
+
 // Legacy function for backward compatibility
 export function uploadImage(file) {
   return uploadMedia(file);

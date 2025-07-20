@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   signOut,
   onAuthStateChanged,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "./firebase";
 
@@ -50,6 +51,40 @@ export const signInWithGoogle = async () => {
 export const logOut = async () => {
   try {
     await signOut(auth);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateUserDisplayName = async (displayName) => {
+  try {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      throw new Error("No user is currently signed in");
+    }
+
+    await updateProfile(currentUser, {
+      displayName: displayName,
+    });
+
+    return currentUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateUserPhotoURL = async (photoURL) => {
+  try {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      throw new Error("No user is currently signed in");
+    }
+
+    await updateProfile(currentUser, {
+      photoURL: photoURL,
+    });
+
+    return currentUser;
   } catch (error) {
     throw error;
   }
